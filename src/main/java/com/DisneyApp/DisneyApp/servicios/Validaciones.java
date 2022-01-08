@@ -12,4 +12,16 @@ public class Validaciones {
 		}
 	}
 	
+	public void validarInteger(Integer contenido, String nombre) throws Exception{
+		if(contenido == null || contenido == 0) {
+			throw new Exception(nombre + " can't be null or zero");
+		}
+	}
+	
+	public void validarDouble(Double contenido, String nombre) throws Exception{
+		if(contenido == null || contenido == 0.0 ) {
+			throw new Exception(nombre + " can't be null or zero");
+		}
+	}
+	
 }
