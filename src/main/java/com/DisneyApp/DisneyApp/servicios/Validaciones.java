@@ -1,5 +1,7 @@
 package com.DisneyApp.DisneyApp.servicios;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +22,12 @@ public class Validaciones {
 	
 	public void validarDouble(Double contenido, String nombre) throws Exception{
 		if(contenido == null || contenido == 0.0 ) {
+			throw new Exception(nombre + " can't be null or zero");
+		}
+	}
+	
+	public void validarDate(Date contenido, String nombre) throws Exception{
+		if(contenido == null) {
 			throw new Exception(nombre + " can't be null or zero");
 		}
 	}

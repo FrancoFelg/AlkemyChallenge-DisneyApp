@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${Movie.titulo}">Movie</title>
+</head>
+<body>
+    <h1>¡Bienvenido a la página de <span th:text="${Movie.titulo}"></span>!</h1>
+    <h2>Los personajes asociados a este película son:</h2>
+    <ul>
+        <li th:each="personaje : ${pelicula.personajesAsociados}">
+            <p th:text="${personaje.nombre}"></p>
+        </li>
+    </ul>      
+    
+</body>
+</html>
