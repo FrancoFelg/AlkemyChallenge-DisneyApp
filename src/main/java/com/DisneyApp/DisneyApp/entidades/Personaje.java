@@ -1,14 +1,18 @@
 package com.DisneyApp.DisneyApp.entidades;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@Table(name="personaje") 
 public class Personaje {
 	
 	//El auto generado me permite no asignar una ID manualmente	
@@ -16,19 +20,21 @@ public class Personaje {
 	@GeneratedValue(generator="uuid")
 	@GenericGenerator(name="uuid", strategy="uuid2")
 	private String id;
+	
 	@OneToOne
 	private Imagen imagen;
 	private String nombre;
 	private Integer edad;
 	private Double peso;
 	private String historia;
-	@ManyToOne
-	private PeliculaSerie peliculaSeries;
+	
+	@ManyToMany(mappedBy = "personajesAsociados")
+	private List<PeliculaSerie> peliculasSeries;
 	
 	public Personaje() {}
-	
+
 	public Personaje(String id, Imagen imagen, String nombre, Integer edad, Double peso, String historia,
-			PeliculaSerie peliculaSeries) {
+			List<PeliculaSerie> peliculasSeries) {
 		super();
 		this.id = id;
 		this.imagen = imagen;
@@ -36,8 +42,9 @@ public class Personaje {
 		this.edad = edad;
 		this.peso = peso;
 		this.historia = historia;
-		this.peliculaSeries = peliculaSeries;
+		this.peliculasSeries = peliculasSeries;
 	}
+
 
 	public String getId() {
 		return id;
@@ -87,12 +94,12 @@ public class Personaje {
 		this.historia = historia;
 	}
 
-	public PeliculaSerie getPeliculaSeries() {
-		return peliculaSeries;
+	public List<PeliculaSerie> getPeliculasSeries() {
+		return peliculasSeries;
 	}
 
-	public void setPeliculaSeries(PeliculaSerie peliculaSeries) {
-		this.peliculaSeries = peliculaSeries;
-	}			
+	public void setPeliculasSeries(List<PeliculaSerie> peliculasSeries) {
+		this.peliculasSeries = peliculasSeries;
+	}	
 	
 }

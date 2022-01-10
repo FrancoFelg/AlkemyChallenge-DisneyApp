@@ -6,14 +6,18 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@Table(name="movie") 
 public class PeliculaSerie {
 
 	@Id
@@ -23,11 +27,19 @@ public class PeliculaSerie {
 	@OneToOne
 	private Imagen imagen;
 	private String titulo;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date fechaDeCreacion;
 	private Integer calificacion;
-	@OneToMany
+	
+	@ManyToMany
+	@JoinTable(
+			name="personajes_asociados", //Se va a crear una nueva tabla que una a personaje y 
+			joinColumns =  @JoinColumn(name = "movie_id"),
+			inverseJoinColumns = @JoinColumn(name = "personaje_id")
+			)
 	private List<Personaje> personajesAsociados;
+	
+	
 	
 	public PeliculaSerie() {		
 	}

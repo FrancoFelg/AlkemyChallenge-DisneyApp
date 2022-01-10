@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${Personaje.nombre}">Personaje</title>
+</head>
+<body>
+    <h1>¡Bienvenido a la página de <span th:text="${Personaje.nombre}"></span>!</h1>
+    <p>¡Tiene <span th:text="${Personaje.edad}">20</span> años!</p>    
+    <p>Pesa <span th:text="${Personaje.peso}">170</span>kg</p>
+    <p th:text="${Personaje.historia}"> </p>
+    
+     
+    <p>Aparece en: </p>
+    <p th:if="${ Personaje.peliculaSeries == null}">Ninguna aun :c</p>
+    <p th:if="${Personaje.peliculaSeries != null}" th:each="peliculaSerie : ${Personaje.peliculaSeries}">
+        <p th:if="${Personaje.peliculaSeries != null}" th:text="${peliculaSerie.titulo}">  </p>
+    </p>
+    
+
+    
+</body>
+</html>
