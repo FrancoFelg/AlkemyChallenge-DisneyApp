@@ -87,6 +87,7 @@ public class PeliculaSeriesControlador {
 	@GetMapping("/{id}") //Muestra una película y sus datos
 	private String retornarMovie(Model model, @PathVariable String id) throws Exception {		
 		model.addAttribute("Movie", movieServicio.retornarPeliculaSeriePorId(id));
+		System.out.println("En POSTMAPPING /ID : movie="+movieServicio.retornarPeliculaSeriePorId(id));
 		return "movie.html";
 	}	
 	

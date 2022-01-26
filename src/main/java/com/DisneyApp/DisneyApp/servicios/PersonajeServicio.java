@@ -1,5 +1,6 @@
 package com.DisneyApp.DisneyApp.servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.DisneyApp.DisneyApp.entidades.Imagen;
 import com.DisneyApp.DisneyApp.entidades.PeliculaSerie;
 import com.DisneyApp.DisneyApp.entidades.Personaje;
+import com.DisneyApp.DisneyApp.repositorios.PeliculaSerieRepositorio;
 import com.DisneyApp.DisneyApp.repositorios.PersonajeRepositorio;
 
 @Service
@@ -16,6 +18,9 @@ public class PersonajeServicio {
 
 	@Autowired
 	private PersonajeRepositorio personajeRepositorio;
+	
+	@Autowired
+	private PeliculaSerieRepositorio movieRepositorio;
 	
 	@Autowired
 	private ImagenServicio imagenServicio;
@@ -46,14 +51,31 @@ public class PersonajeServicio {
 		
 		if(idMovie != null) {
 			PeliculaSerie movie = movieServicio.retornarPeliculaSeriePorId(idMovie);
-			List<PeliculaSerie> listaMoviesPersonaje = personaje.getPeliculasSeries();
-			listaMoviesPersonaje.add(movie);
-			personaje.setPeliculasSeries(listaMoviesPersonaje);			
+
+
+			List<PeliculaSerie> listaPeliculas = personaje.getPeliculasSeries();
+			if(personaje.getPeliculasSeries() == null) {
+				listaPeliculas = new ArrayList<>();
+			}else {
+				listaPeliculas.add(movie);
+				personaje.setPeliculasSeries(listaPeliculas);
+			}
+			
+			List<Personaje> listaPersonajes = movie.getPersonajesAsociados();
+			if(movie.getPersonajesAsociados() == null) {
+				listaPersonajes = new ArrayList<>();
+			}else {
+				listaPersonajes.add(personaje);
+				movie.setPersonajesAsociados(listaPersonajes);
+			}
+			System.out.println("EN CREAR PERSONAJE: personaje="+personaje);
+			System.out.println("EN CREAR PERSONAJE: movie="+movie);
+			
+			personajeRepositorio.save(personaje);
+			movieRepositorio.save(movie);
 		}
+			
 		
-		
-		//Guardo el personaje creado
-		personajeRepositorio.save(personaje);
 	
 	}
 	
@@ -101,19 +123,28 @@ public class PersonajeServicio {
 		personaje.setHistoria(historia);		
 		Imagen foto = imagenServicio.guardar(imagen);
 		personaje.setImagen(foto);
-		
+		PeliculaSerie movie = movieServicio.retornarPeliculaSeriePorId(idMovie);
 
-		if(idMovie != null) {
-			PeliculaSerie movie = movieServicio.retornarPeliculaSeriePorId(idMovie);
-			List<PeliculaSerie> listaMoviesPersonaje = personaje.getPeliculasSeries();
-			listaMoviesPersonaje.add(movie);
-			personaje.setPeliculasSeries(listaMoviesPersonaje);	
-			System.out.println("En PERSONAJESERVICIO EDITARPERSONAJE: idMovie="+idMovie);
-			System.out.println("En PERSONAJESERVICIO EDITARPERSONAJE: peliculasSeries="+listaMoviesPersonaje);
-			System.out.println("En PERSONAJESERVICIO EDITARPERSONAJE: getterPeliculasSeries="+personaje.getPeliculasSeries());
+		List<PeliculaSerie> listaPeliculas = personaje.getPeliculasSeries();
+		if(personaje.getPeliculasSeries() == null) {
+			listaPeliculas = new ArrayList<>();
+		}else {
+			listaPeliculas.add(movie);
+			personaje.setPeliculasSeries(listaPeliculas);
 		}
-		//Guardo el personaje creado
+		
+		List<Personaje> listaPersonajes = movie.getPersonajesAsociados();
+		if(movie.getPersonajesAsociados() == null) {
+			listaPersonajes = new ArrayList<>();
+		}else {
+			listaPersonajes.add(personaje);
+			movie.setPersonajesAsociados(listaPersonajes);
+		}
+		System.out.println("EN CREAR PERSONAJE: personaje="+personaje);
+		System.out.println("EN CREAR PERSONAJE: movie="+movie);
+		
 		personajeRepositorio.save(personaje);
+		movieRepositorio.save(movie);
 	
 	}
 	

@@ -118,6 +118,15 @@ public class PeliculaSerie {
 
 	public void setGenero(Genero genero) {
 		this.genero = genero;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "PeliculaSerie [id=" + id + ", imagen=" + imagen + ", titulo=" + titulo + ", fechaDeCreacion="
+				+ fechaDeCreacion + ", calificacion=" + calificacion + ", personajesAsociados=" + personajesAsociados
+				+ ", genero=" + genero + "]";
 	}			
 	
 	

@@ -100,6 +100,14 @@ public class Personaje {
 
 	public void setPeliculasSeries(List<PeliculaSerie> peliculasSeries) {
 		this.peliculasSeries = peliculasSeries;
+	}
+
+	@Override
+	public String toString() {
+		return "Personaje [id=" + id + ", imagen=" + imagen + ", nombre=" + nombre + ", edad=" + edad + ", peso=" + peso
+				+ ", historia=" + historia + ", peliculasSeries=" + peliculasSeries + "]";
 	}	
+	
+	
 	
 }
