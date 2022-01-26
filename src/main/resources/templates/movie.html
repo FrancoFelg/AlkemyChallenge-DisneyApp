@@ -9,6 +9,8 @@
 <body>
     <h1>¡Bienvenido a la página de <span th:text="${Movie.titulo}"></span>!</h1>
     <p>Estrenada el <span th:text="${Movie.fechaDeCreacion}"></span>!</p>        
-    
+    <p th:if="${Movie.genero != null}">El genero es: <span th:text="${Movie.genero.nombre}"></span> </p>
+
+
 </body>
 </html>

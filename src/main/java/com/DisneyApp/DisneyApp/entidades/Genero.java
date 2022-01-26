@@ -20,6 +20,7 @@ public class Genero {
 	private String nombre;
 	@OneToOne
 	private Imagen imagen;
+	
 	@OneToMany
 	private List<PeliculaSerie> peliculasYSeriesAsociadas;
 	

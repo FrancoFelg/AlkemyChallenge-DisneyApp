@@ -26,6 +26,8 @@
 			</ul>
 			<form class="d-flex" method="POST" th:action="@{/characters/search/}">
 			  <input name="nombre" class="form-control me-2" type="search" placeholder="Ingrese un personaje..." aria-label="Search">
+			  <input name="edad" class="form-control me-2" type="search" placeholder="Ingrese su edad..." aria-label="Search">
+			  <input name="peso" class="form-control me-2" type="search" placeholder="Ingrese un peso..." aria-label="Search">
 			  <button class="btn btn-outline-success" type="submit">Buscar</button>
 			</form>
 		  </div>
@@ -42,12 +44,14 @@
 	<div class="container">
 		<div class="row">
 			<div th:if="${Search == false}" th:each="personaje : ${personajes}" class="col-md-12 col-lg-3">
+				<img th:if="${personaje.imagen != null}" th:src="${'/imagen/personaje?id=' + personaje.id}">
 				<a th:href="@{/characters/}+${personaje.id}"><p th:text="${personaje.nombre}"></p></a>
 				<a th:href="@{/characters/updateCharacter/}+${personaje.id}"><div class="col-3 btn btn-info">Editar</div></a>
 				<a th:href="@{/characters/deleteCharacter/}+${personaje.id}"><div class="col-3 btn btn-danger">Eliminar</div></a>
 			</div >
 
 			<div th:if="${Search == true && #strings.equals(Nombre, personaje.nombre) }" th:each="personaje : ${personajes}" class="col-md-12 col-lg-3">
+				<img th:if="${personaje.imagen != null}" th:src="${'/imagen/personaje?id=' + personaje.id}">
 				<a  th:href="@{/characters/}+${personaje.id}"><p th:text="${personaje.nombre}"></p></a>
 				<a th:href="@{/characters/updateCharacter/}+${personaje.id}"><div class="col-3 btn btn-info">Editar</div></a>
 				<a th:href="@{/characters/deleteCharacter/}+${personaje.id}"><div class="col-3 btn btn-danger">Eliminar</div></a>

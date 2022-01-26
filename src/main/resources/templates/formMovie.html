@@ -29,6 +29,10 @@
 					<label for="imagen">Foto de la película/serie</label>
                     <input id="imagen" name="imagen" type="file">
 
+					<select name="genero">
+						<option th:each="genero : ${generos}" th:text="${genero.nombre}" th:value="${genero.id}"></option>				  
+					</select>
+
 					<input type="submit" value="Crear película">
 				</form>
 
@@ -44,6 +48,10 @@
 
 					<label for="imagen">Foto de la película/serie</label>
                     <input id="imagen" name="imagen" type="file">
+
+					<select name="genero">
+						<option th:each="genero : ${generos}" th:text="${genero.nombre}" th:value="${genero.id}"></option>				  
+					</select>
 
                     <input type="hidden" th:value="${pelicula.id}" name="id">
 

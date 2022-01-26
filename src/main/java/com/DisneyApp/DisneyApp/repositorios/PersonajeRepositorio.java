@@ -18,4 +18,10 @@ public interface PersonajeRepositorio extends JpaRepository<Personaje, String>{
 	@Query("SELECT a FROM Personaje a WHERE a.nombre = :nombre")
 	public List<Personaje> retornarPersonajesPorNombre(@Param("nombre") String nombre);
 	
+	@Query("SELECT a FROM Personaje a WHERE a.edad = :edad")
+	public List<Personaje> retornarPersonajesPorEdad(@Param("edad") Integer edad);
+	
+	@Query("SELECT a FROM Personaje a WHERE a.peso = :peso")
+	public List<Personaje> retornarPersonajesPorPeso(@Param("peso") Double peso);
+	
 }

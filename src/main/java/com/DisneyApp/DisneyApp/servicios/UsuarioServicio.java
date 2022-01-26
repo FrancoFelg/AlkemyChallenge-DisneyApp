@@ -84,7 +84,7 @@ public class UsuarioServicio implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario = usuarioRepositorio.retornarUsuarioPorUsername(username);
+		Usuario usuario = usuarioRepositorio.retornarUsuarioPorEmail(username);
 		if(usuario != null) {
 			List<GrantedAuthority> permisos = new ArrayList<>();
 			

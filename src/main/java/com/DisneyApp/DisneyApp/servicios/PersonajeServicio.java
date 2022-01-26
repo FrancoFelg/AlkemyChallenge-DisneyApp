@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.DisneyApp.DisneyApp.entidades.Imagen;
+import com.DisneyApp.DisneyApp.entidades.PeliculaSerie;
 import com.DisneyApp.DisneyApp.entidades.Personaje;
 import com.DisneyApp.DisneyApp.repositorios.PersonajeRepositorio;
 
@@ -20,10 +21,13 @@ public class PersonajeServicio {
 	private ImagenServicio imagenServicio;
 	
 	@Autowired
+	private PeliculaSerieServicio movieServicio;
+	
+	@Autowired
 	private Validaciones validator;
 	
 	//CREATE
-	public void crearPersonaje(String nombre, Integer edad, Double peso, String historia, MultipartFile imagen) throws Exception {
+	public void crearPersonaje(String nombre, Integer edad, Double peso, String historia, MultipartFile imagen, String idMovie) throws Exception {
 		//Valido que los datos no sean nulos salvo la imagen, ya que por defecto si no existe la setteo en nulo (revisar ImagenServicio)
 		validator.validarString(nombre, "Nombre");
 		validator.validarInteger(edad, "Edad");
@@ -39,6 +43,14 @@ public class PersonajeServicio {
 		personaje.setHistoria(historia);		
 		Imagen foto = imagenServicio.guardar(imagen);
 		personaje.setImagen(foto);
+		
+		if(idMovie != null) {
+			PeliculaSerie movie = movieServicio.retornarPeliculaSeriePorId(idMovie);
+			List<PeliculaSerie> listaMoviesPersonaje = personaje.getPeliculasSeries();
+			listaMoviesPersonaje.add(movie);
+			personaje.setPeliculasSeries(listaMoviesPersonaje);			
+		}
+		
 		
 		//Guardo el personaje creado
 		personajeRepositorio.save(personaje);
@@ -60,9 +72,19 @@ public class PersonajeServicio {
 		return personajeRepositorio.retornarPersonajesPorNombre(nombre);
 	}
 	
+	public List<Personaje> retornarPersonajePorEdad(Integer edad) throws Exception {
+		validator.validarInteger(edad, "Edad");
+		return personajeRepositorio.retornarPersonajesPorEdad(edad);
+	}
+	
+	public List<Personaje> retornarPersonajePorPeso(Double peso) throws Exception {
+		validator.validarDouble(peso, "Peso");
+		return personajeRepositorio.retornarPersonajesPorPeso(peso);
+	}
+	
 	
 	//UPDATE
-	public void editarPersonaje(String id, String nombre, Integer edad, Double peso, String historia, MultipartFile imagen) throws Exception {
+	public void editarPersonaje(String id, String nombre, Integer edad, Double peso, String historia, MultipartFile imagen, String idMovie) throws Exception {
 		//Valido que los datos no sean nulos salvo la imagen, ya que por defecto si no existe la setteo en nulo (revisar ImagenServicio)
 		validator.validarString(id, nombre);
 		validator.validarString(nombre, "Nombre");
@@ -80,6 +102,16 @@ public class PersonajeServicio {
 		Imagen foto = imagenServicio.guardar(imagen);
 		personaje.setImagen(foto);
 		
+
+		if(idMovie != null) {
+			PeliculaSerie movie = movieServicio.retornarPeliculaSeriePorId(idMovie);
+			List<PeliculaSerie> listaMoviesPersonaje = personaje.getPeliculasSeries();
+			listaMoviesPersonaje.add(movie);
+			personaje.setPeliculasSeries(listaMoviesPersonaje);	
+			System.out.println("En PERSONAJESERVICIO EDITARPERSONAJE: idMovie="+idMovie);
+			System.out.println("En PERSONAJESERVICIO EDITARPERSONAJE: peliculasSeries="+listaMoviesPersonaje);
+			System.out.println("En PERSONAJESERVICIO EDITARPERSONAJE: getterPeliculasSeries="+personaje.getPeliculasSeries());
+		}
 		//Guardo el personaje creado
 		personajeRepositorio.save(personaje);
 	

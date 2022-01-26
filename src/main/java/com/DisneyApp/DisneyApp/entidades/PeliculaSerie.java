@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -39,20 +40,29 @@ public class PeliculaSerie {
 			)
 	private List<Personaje> personajesAsociados;
 	
+	@ManyToOne
+	private Genero genero;
+	
 	
 	
 	public PeliculaSerie() {		
 	}
 	
+	
+
 	public PeliculaSerie(String id, Imagen imagen, String titulo, Date fechaDeCreacion, Integer calificacion,
-			List<Personaje> personajesAsociados) {		
+			List<Personaje> personajesAsociados, Genero genero) {
+		super();
 		this.id = id;
 		this.imagen = imagen;
 		this.titulo = titulo;
 		this.fechaDeCreacion = fechaDeCreacion;
 		this.calificacion = calificacion;
 		this.personajesAsociados = personajesAsociados;
+		this.genero = genero;
 	}
+
+
 
 	public String getId() {
 		return id;
@@ -100,6 +110,16 @@ public class PeliculaSerie {
 
 	public void setPersonajesAsociados(List<Personaje> personajesAsociados) {
 		this.personajesAsociados = personajesAsociados;
+	}
+
+	public Genero getGenero() {
+		return genero;
+	}
+
+	public void setGenero(Genero genero) {
+		this.genero = genero;
 	}			
+	
+	
 	
 }
