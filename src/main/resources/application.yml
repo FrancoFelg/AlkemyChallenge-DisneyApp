@@ -1,4 +1,17 @@
 spring:
+#MailSender
+ mail:
+   host: smtp.gmail.com
+   port: 587
+   username: examplefelgnoreply@gmail.com
+   password: 321654987$
+   properties:
+       mail:
+           smtp:
+               auth: true
+               starttls:
+                   required: true
+                   enable: true
 #Configuraci�n MySQL
  datasource:
   url:

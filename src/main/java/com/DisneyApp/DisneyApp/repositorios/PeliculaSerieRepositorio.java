@@ -21,10 +21,10 @@ public interface PeliculaSerieRepositorio extends JpaRepository<PeliculaSerie, S
 	@Query("SELECT a FROM PeliculaSerie a WHERE a.genero.nombre = :genero")
 	public List<PeliculaSerie> retornarMoviesPorGenero(@Param("genero") String genero);
 	
-	@Query("SELECT a FROM PeliculaSerie a ORDER BY fecha_de_creacion")
+	@Query("SELECT a FROM PeliculaSerie a ORDER BY fecha_de_creacion ASC")
 	public List<PeliculaSerie> retornarMoviesPorFechaASC();
 	
 	@Query("SELECT a FROM PeliculaSerie a ORDER BY fecha_de_creacion DESC")
-	public List<PeliculaSerie> retornarMoviesPorFechaDESC();
+	public List<PeliculaSerie> retornarMoviesPorFechaDESC();		
 	
 }

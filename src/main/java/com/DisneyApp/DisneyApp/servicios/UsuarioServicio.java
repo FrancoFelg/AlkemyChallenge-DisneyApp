@@ -29,6 +29,9 @@ public class UsuarioServicio implements UserDetailsService{
 	@Autowired
 	private Validaciones validator;
 	
+	@Autowired
+	private MyMailSender mailSender;
+	
 	//CREATE
 	public void crearUsuario(String username, String password, String email) throws Exception {
 		//Valido que no sean nulas ni vacías
@@ -42,7 +45,8 @@ public class UsuarioServicio implements UserDetailsService{
 		usuario.setEmail(email);
 		
 		usuarioRepositorio.save(usuario);
-		
+		mailSender.enviarMail(usuario.getUsername(), usuario.getEmail(), 
+				"¡Bienvenido a Disney API!");
 	}
 	
 	//UPDATE
@@ -67,6 +71,10 @@ public class UsuarioServicio implements UserDetailsService{
 	//READ
 	public Usuario retornarUsuarioPorUsername(String username) {
 		return usuarioRepositorio.retornarUsuarioPorUsername(username);
+	}
+	
+	public Usuario retornarUsuarioPorEmail(String email) {
+		return usuarioRepositorio.retornarUsuarioPorEmail(email);
 	}
 	
 	//DELETE

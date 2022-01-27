@@ -27,10 +27,18 @@ public class PeliculaSeriesControlador {
 	@Autowired
 	private GeneroServicio generoServicio;
 	
-	@GetMapping("/") //Se muestran las peliculas
-	private String retornarPeliculaSeriePorFechaASC(Model model) throws Exception {
+	@GetMapping("/asc") //Se muestran las peliculas
+	private String retornarPeliculaSeriesASC(Model model) throws Exception {		
 		model.addAttribute("Search", false);
 		model.addAttribute("movies", movieServicio.retornarPeliculaSeriePorFechaASC());
+		model.addAttribute("generos", generoServicio.retornarGeneros());
+		return "movies.html";
+	}
+	
+	@GetMapping("/desc") //Se muestran las peliculas
+	private String retornarPeliculaSeriesDESC(Model model) throws Exception {		
+		model.addAttribute("Search", false);
+		model.addAttribute("movies", movieServicio.retornarPeliculaSeriePorFechaDESC());
 		model.addAttribute("generos", generoServicio.retornarGeneros());
 		return "movies.html";
 	}
@@ -39,16 +47,15 @@ public class PeliculaSeriesControlador {
 	private String retornarPeliculaSeriePorFechaASCSearch(Model model, 
 			@PathVariable (required=false) String titulo,
 			@RequestParam (required = false) String genero,
-			@RequestParam (required = false) String fecha_de_creacion) throws Exception {
-		if(genero != null || fecha_de_creacion != null) {
-			if(fecha_de_creacion != null) {
-				if(fecha_de_creacion.equals("fecha_de_creacion=desc")) {
-					model.addAttribute("Titulo", titulo);
-					model.addAttribute("Search", true);
-					model.addAttribute("movies", movieServicio.retornarPeliculaSeriePorFechaDESC() );
-					return "movies.html";
-				}				
-			}		
+			@RequestParam (required = false) String fecha_de_creacion,
+			@RequestParam (required = false) String idMovie) throws Exception {
+		if(genero != null|| idMovie != null) {
+			
+			
+			if(idMovie != null) {				
+				model.addAttribute("movie", movieServicio.retornarPeliculaSeriePorId(idMovie) );
+				return "movie.html";
+			}
 			if(genero != null) {
 				model.addAttribute("Titulo", titulo);
 				model.addAttribute("Search", true);
@@ -65,19 +72,20 @@ public class PeliculaSeriesControlador {
 	@PostMapping("/search/") //Redirecciona los datos de la busqueda
 	private String redireccionarPersonajesSerach(@RequestParam (required = false)String titulo, 
 			@RequestParam (required = false) String genero,
-			@RequestParam (required = false) String desc) {
+			@RequestParam (required = false) String idMovie) {
 		String url = "redirect:/movies/search/";
 		if(titulo != null) {
 			url += "titulo";
 		}		
-		if(genero != null || desc != null) {
+		if(genero != null || idMovie != null) {
 			url += "?";
 			
 			if(genero != null) {
 				url += "genero="+genero;				
 			}
-			if(desc.equals("desc")) {				
-				url += "&fecha_de_creacion=desc";
+			
+			if(idMovie != null) {				
+				url += "&idMovie="+idMovie;
 			}
 		}
 				
@@ -86,8 +94,7 @@ public class PeliculaSeriesControlador {
 	
 	@GetMapping("/{id}") //Muestra una película y sus datos
 	private String retornarMovie(Model model, @PathVariable String id) throws Exception {		
-		model.addAttribute("Movie", movieServicio.retornarPeliculaSeriePorId(id));
-		System.out.println("En POSTMAPPING /ID : movie="+movieServicio.retornarPeliculaSeriePorId(id));
+		model.addAttribute("Movie", movieServicio.retornarPeliculaSeriePorId(id));		
 		return "movie.html";
 	}	
 	
@@ -128,6 +135,12 @@ public class PeliculaSeriesControlador {
 	private String retornarMoviesAndCharacters(Model model, @PathVariable String id) throws Exception {
 		model.addAttribute("pelicula", movieServicio.retornarPeliculaSeriePorId(id));
 		return "moviesAndCharacters.html";
+	}
+	
+	@GetMapping("/order/{orden}")
+	public String redireccionarOrden(Model model, @PathVariable String orden) {
+		model.addAttribute("orden", orden);
+		return "redirect:/movies/{orden}";
 	}
 	
 	

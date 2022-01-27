@@ -49,34 +49,8 @@ public class PersonajeServicio {
 		Imagen foto = imagenServicio.guardar(imagen);
 		personaje.setImagen(foto);
 		
-		if(idMovie != null) {
-			PeliculaSerie movie = movieServicio.retornarPeliculaSeriePorId(idMovie);
-
-
-			List<PeliculaSerie> listaPeliculas = personaje.getPeliculasSeries();
-			if(personaje.getPeliculasSeries() == null) {
-				listaPeliculas = new ArrayList<>();
-			}else {
-				listaPeliculas.add(movie);
-				personaje.setPeliculasSeries(listaPeliculas);
-			}
-			
-			List<Personaje> listaPersonajes = movie.getPersonajesAsociados();
-			if(movie.getPersonajesAsociados() == null) {
-				listaPersonajes = new ArrayList<>();
-			}else {
-				listaPersonajes.add(personaje);
-				movie.setPersonajesAsociados(listaPersonajes);
-			}
-			System.out.println("EN CREAR PERSONAJE: personaje="+personaje);
-			System.out.println("EN CREAR PERSONAJE: movie="+movie);
-			
-			personajeRepositorio.save(personaje);
-			movieRepositorio.save(movie);
-		}
-			
-		
-	
+		personajeRepositorio.save(personaje);
+						
 	}
 	
 	//READ
@@ -143,8 +117,7 @@ public class PersonajeServicio {
 		System.out.println("EN CREAR PERSONAJE: personaje="+personaje);
 		System.out.println("EN CREAR PERSONAJE: movie="+movie);
 		
-		personajeRepositorio.save(personaje);
-		movieRepositorio.save(movie);
+		personajeRepositorio.save(personaje);		
 	
 	}
 	

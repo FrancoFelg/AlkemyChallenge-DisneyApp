@@ -12,14 +12,5 @@
     <p>Pesa <span th:text="${Personaje.peso}">170</span>kg</p>
     <p th:text="${Personaje.historia}"> </p>
     
-     
-    <p>Aparece en: </p>
-    <p th:if="${ moviesPersonaje == null}">Ninguna aun :c</p>
-    <p th:if="${moviesPersonaje != null}">
-        <p th:each="movie : ${moviesPersonaje}" th:text="${movie.titulo}"></p>
-    </p>
-    
-
-    
 </body>
 </html>

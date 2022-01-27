@@ -105,13 +105,13 @@ public class PersonajeControlador {
 	}
 	
 	@PostMapping("/createCharacter")
-	private String redireccionarCreateCharacter(@RequestParam String nombre, @RequestParam Integer edad, @RequestParam Double peso, @RequestParam String historia, @RequestParam MultipartFile imagen, @RequestParam String idMovie) throws Exception {
+	private String redireccionarCreateCharacter(@RequestParam String nombre, @RequestParam Integer edad, @RequestParam Double peso, @RequestParam String historia, @RequestParam (required = false) MultipartFile  imagen, @RequestParam (required = false)  String idMovie) throws Exception {
 		personajeServicio.crearPersonaje(nombre, edad, peso, historia, imagen, idMovie);
 		return "redirect:/characters/";
 	}
 	
 	@PostMapping("/updateCharacter")
-	private String redireccionarUpdateCharacter(@RequestParam String id,@RequestParam String nombre, @RequestParam Integer edad, @RequestParam Double peso, @RequestParam String historia, @RequestParam MultipartFile imagen, @RequestParam String idMovie) throws Exception {		
+	private String redireccionarUpdateCharacter(@RequestParam String id,@RequestParam String nombre, @RequestParam Integer edad, @RequestParam Double peso, @RequestParam String historia, @RequestParam (required = false) MultipartFile imagen, @RequestParam (required = false) String idMovie) throws Exception {		
 		personajeServicio.editarPersonaje(id, nombre, edad, peso, historia, imagen, idMovie);
 		System.out.println("En POSTMAPPING UPDATE CHARACTER: idMovie="+idMovie);
 		return "redirect:/characters/";
