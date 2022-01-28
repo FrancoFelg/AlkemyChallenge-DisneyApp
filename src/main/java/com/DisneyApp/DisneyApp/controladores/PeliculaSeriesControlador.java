@@ -116,19 +116,19 @@ public class PeliculaSeriesControlador {
 	@GetMapping("/deleteMovie/{id}") //Elimina una película y redirecciona al index
 	private String redireccionarDeleteMovie(Model model, @PathVariable String id) throws Exception {
 		movieServicio.borrarPeliculaSerie(id);		
-		return "redirect:/movies/";
+		return "redirect:/movies/asc";
 	}
 	
 	@PostMapping("/createMovie") //Crea una película y redirecciona al index
 	private String redireccionarCreateMovie(@RequestParam String titulo, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaCreacion, @RequestParam Integer calificacion, MultipartFile imagen, @RequestParam (required = false) Genero genero) throws Exception {
 		movieServicio.crearPeliculaSerie(titulo, fechaCreacion, calificacion, imagen, genero);
-		return "redirect:/movies/";
+		return "redirect:/movies/asc";
 	}
 	
 	@PostMapping("/updateMovie") //Edita una película y redirecciona al index
 	private String redireccionarUpdateMovie(@RequestParam String id,@RequestParam String titulo, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaCreacion, @RequestParam Integer calificacion, MultipartFile imagen, Genero genero) throws Exception {		
 		movieServicio.editarPeliculaSerie(id, titulo, fechaCreacion, calificacion, imagen, genero);
-		return "redirect:/movies/";
+		return "redirect:/movies/asc";
 	}
 	
 	@GetMapping("/moviesAndCharacters/{id}")//Retorna la pagina donde muestra los personajes asociados a la pelicula
